@@ -26,8 +26,6 @@ export default function Invoice({ transaction, onClose }) {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4">
-
-        {/* PRINTABLE WRAPPER */}
         <div
           ref={printableRef}
           className="print-area bg-white text-black w-full max-w-2xl rounded-2xl p-6 shadow-lg overflow-y-auto max-h-[90vh]"

@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { calculateTransactionTotal } from "../utils";
 
 export default function POS({ inventory = [], onAddToCart, cart = { items: [] }, onRemoveFromCart }) {
-  // local qty inputs for inventory
   const [qtys, setQtys] = useState({});
 
   const handleQtyChange = (id, value) => {
@@ -16,7 +15,6 @@ export default function POS({ inventory = [], onAddToCart, cart = { items: [] },
       <h2 className="text-2xl font-bold mb-4">POS</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Inventory List */}
         <div className="bg-[#0F0F0F] p-4 rounded-lg">
           <h3 className="font-semibold mb-3">Inventory</h3>
           <div className="space-y-3 max-h-[45vh] overflow-auto pr-2">
@@ -48,7 +46,6 @@ export default function POS({ inventory = [], onAddToCart, cart = { items: [] },
           </div>
         </div>
 
-        {/* Current Cart */}
         <div className="bg-[#0F0F0F] p-4 rounded-lg">
           <h3 className="font-semibold mb-3">Cart</h3>
 

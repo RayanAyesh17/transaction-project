@@ -5,7 +5,6 @@ export function generateID() {
 }
 
 export function calculateItemTotal(item) {
-  // item: { price, feePercent, qty }
   const base = Number(item.price || 0);
   const qty = Number(item.qty || 1);
   const feePercent = Number(item.feePercent || 0);
@@ -18,10 +17,9 @@ export function calculateTransactionTotal(items = []) {
 }
 
 export function paymentEffectiveAmount(payment) {
-  // payment: { method: 'cash'|'credit'|'debit', amount }
   const amt = Number(payment.amount || 0);
   if (payment.method === "credit" || payment.method === "debit") {
-    return +(amt * 1.02); // +2% on that piece
+    return +(amt * 1.02); 
   }
   return +amt;
 }

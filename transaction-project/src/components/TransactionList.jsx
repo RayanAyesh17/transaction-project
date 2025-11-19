@@ -1,9 +1,16 @@
+import { useState } from "react";
+import AddTransactionModal from "./AddTransactionModal";
 import { calculateTransactionTotal } from "../utils";
 
-export default function TransactionList({ transaction, onBack, onClear, onComplete }) {
-  
+export default function TransactionList({ transaction, onBack, onClear, onComplete, onUpdateItem }) {
+  const [editItem, setEditItem] = useState(null);
   const items = transaction.items || [];
   const total = calculateTransactionTotal(items);
+
+  const handleSaveEdit = (updatedItem) => {
+    onUpdateItem(updatedItem); 
+    setEditItem(null);
+  };
 
   return (
     <div className="bg-[#121212] p-6 rounded-2xl shadow-lg flex flex-col gap-4 animate-fadeIn">
@@ -26,13 +33,29 @@ export default function TransactionList({ transaction, onBack, onClear, onComple
         {items.length === 0 ? (
           <p className="text-gray-500 text-sm">No items selected.</p>
         ) : (
-          items.map((item, i) => (
+          items.map((item) => (
             <div 
-              key={i} 
-              className="flex justify-between text-gray-200 border-b border-gray-700 pb-2"
+              key={item.id} 
+              className="flex justify-between items-center text-gray-200 border-b border-gray-700 pb-2"
             >
-              <span>{item.name} x{item.qty || 1}</span>
-              <span>${Number(item.price).toFixed(2)}</span>
+              <div>
+                <span>{item.name} x{item.qty || 1}</span>
+                <span className="ml-2">${Number(item.price).toFixed(2)}</span>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  className="px-2 py-1 bg-purple-600 rounded text-xs"
+                  onClick={() => setEditItem(item)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="px-2 py-1 bg-red-600 rounded text-xs"
+                  onClick={() => onUpdateItem({ ...item, delete: true })}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))
         )}
@@ -40,7 +63,7 @@ export default function TransactionList({ transaction, onBack, onClear, onComple
 
       {/* Totals */}
       <p className="text-gray-300 font-medium transition-colors">
-        Total Items: {items.length}
+        Total Items: {items.reduce((s, i) => s + Number(i.qty || 0), 0)}
       </p>
 
       <p className="text-gray-300 font-medium transition-colors">
@@ -68,7 +91,15 @@ export default function TransactionList({ transaction, onBack, onClear, onComple
         Payments recorded: {transaction.payments ? transaction.payments.length : 0}
       </div>
 
-      {/* Tailwind Animations */}
+      {/* Edit Item Modal */}
+      {editItem && (
+        <AddTransactionModal
+          itemToEdit={editItem}
+          onClose={() => setEditItem(null)}
+          onSave={handleSaveEdit}
+        />
+      )}
+
       <style>
         {`
           @keyframes fadeIn {

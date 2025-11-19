@@ -27,9 +27,7 @@ export default function PaymentModal({ transaction, onClose, onInvoice }) {
 
   return (
     <>
-      {/* Overlay */}
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
-        {/* Modal */}
         <div className="bg-[#1F1F1F] w-full max-w-md p-6 rounded-2xl shadow-2xl flex flex-col gap-4 animate-scaleFade">
 
           <h2 className="text-2xl font-bold text-white">{transaction.name} Payment</h2>
@@ -92,8 +90,7 @@ export default function PaymentModal({ transaction, onClose, onInvoice }) {
           </div>
         </div>
       </div>
-
-      {/* Tailwind CDN Animations */}
+      
       <style>
         {`
           @keyframes fadeIn {
